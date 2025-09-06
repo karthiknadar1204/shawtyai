@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { Cover } from "@/components/ui/cover";
 import { ShineBorder } from "@/components/magicui/shine-border";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
-// import TooltipCredits from '../components/creditsButton'
+import TooltipCredits from '../components/creditsButton'
 import {
   Dialog,
   DialogContent,
@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 // import { createVideo } from '../actions/create'
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 
-const CreateProject = ({ user }: { user: string | null }) => {
+const CreateProject = ({ user, credits }: { user: string | null; credits: number }) => {
   const loadingStates = [
     { text: "Generating Context" },
     { text: "Generating Image Scripts" },
@@ -70,7 +70,7 @@ const CreateProject = ({ user }: { user: string | null }) => {
       )}
       {user && (
         <div className="flex justify-end mr-7 mt-5">
-          {/* <TooltipCredits credits={credits} /> */}
+          <TooltipCredits credits={credits} />
           <Link href={"/dashboard"}>
             <Button className="bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium mx-2 cursor-pointer">
               Dashboard
@@ -106,10 +106,10 @@ const CreateProject = ({ user }: { user: string | null }) => {
               if (!user) {
                 return setTimeout(() => setShowLoginDialog(true), 1000);
               }
-              // if (credits < 1) {
-              //     return setTimeout(() => setShowCreditsDialog(true), 700)
-              // }
-            //   setTimeout(() => handleCreateVideo(), 1000);
+              if (credits < 1) {
+                  return setTimeout(() => setShowCreditsDialog(true), 700)
+              }
+              setTimeout(() => handleCreateVideo(), 1000);
             }}
           />
           <Dialog open={showLoginDialog} onOpenChange={setShowLoginDialog}>
