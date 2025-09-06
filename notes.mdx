@@ -1,0 +1,376 @@
+first command output aws
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % npx remotion lambda policies role
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "0",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListAllMyBuckets"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Sid": "1",
+      "Effect": "Allow",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:ListBucket",
+        "s3:PutBucketAcl",
+        "s3:GetObject",
+        "s3:DeleteObject",
+        "s3:PutObjectAcl",
+        "s3:PutObject",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": [
+        "arn:aws:s3:::remotionlambda-*"
+      ]
+    },
+    {
+      "Sid": "2",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:InvokeFunction"
+      ],
+      "Resource": [
+        "arn:aws:lambda:*:*:function:remotion-render-*"
+      ]
+    },
+    {
+      "Sid": "3",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup"
+      ],
+      "Resource": [
+        "arn:aws:logs:*:*:log-group:/aws/lambda-insights"
+      ]
+    },
+    {
+      "Sid": "4",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "arn:aws:logs:*:*:log-group:/aws/lambda/remotion-render-*",
+        "arn:aws:logs:*:*:log-group:/aws/lambda-insights:*"
+      ]
+    }
+  ]
+}
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % 
+
+
+
+
+
+
+
+
+
+
+
+second aws command output
+/Users/karthiknadar/.zshrc:.:38: no such file or directory: /Users/karthiknadar/.deno/envexport
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   app/new/CreateProject.tsx
+        modified:   package-lock.json
+        modified:   package.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        app/actions/
+        app/lib/decreaseCredits.ts
+        app/lib/findPrompt.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git add .
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git commit -m "store images"
+[master 94fa5cb] store images
+ 9 files changed, 4973 insertions(+), 2987 deletions(-)
+ create mode 100644 app/actions/create.ts
+ create mode 100644 app/actions/image.ts
+ create mode 100644 app/actions/processes.ts
+ create mode 100644 app/actions/script.ts
+ create mode 100644 app/lib/decreaseCredits.ts
+ create mode 100644 app/lib/findPrompt.ts
+ rewrite app/new/CreateProject.tsx (96%)
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git push origin master
+Counting objects: 15, done.
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (15/15), 51.60 KiB | 10.32 MiB/s, done.
+Total 15 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To https://github.com/karthiknadar1204/shawtyai.git
+   ad5b378..94fa5cb  master -> master
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % npm install assemblyai
+
+added 2 packages, and audited 539 packages in 2s
+
+50 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   app/actions/create.ts
+        modified:   app/actions/processes.ts
+        modified:   app/new/CreateProject.tsx
+        modified:   package-lock.json
+        modified:   package.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        app/actions/audio.ts
+        app/actions/captions.ts
+        app/hooks/
+        app/lib/deleteVideo.ts
+        app/lib/duration.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git add .
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git commit -m "audio captions done"
+[master 4110414] audio captions done
+ 10 files changed, 1040 insertions(+), 41 deletions(-)
+ create mode 100644 app/actions/audio.ts
+ create mode 100644 app/actions/captions.ts
+ create mode 100644 app/hooks/useVideoActions.ts
+ create mode 100644 app/lib/deleteVideo.ts
+ create mode 100644 app/lib/duration.ts
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git push origin master
+fatal: unable to access 'https://github.com/karthiknadar1204/shawtyai.git/': Failed to connect to github.com port 443 after 75033 ms: Couldn't connect to server
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % git push origin master
+Counting objects: 17, done.
+Compressing objects: 100% (16/16), done.
+Writing objects: 100% (17/17), 23.40 KiB | 3.90 MiB/s, done.
+Total 17 (delta 8), reused 0 (delta 0)
+remote: Resolving deltas: 100% (8/8), completed with 8 local objects.
+To https://github.com/karthiknadar1204/shawtyai.git
+   94fa5cb..4110414  master -> master
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % npm i @remotion/cli
+npm WARN deprecated source-map@0.8.0-beta.0: The work that was done in this beta branch won't be included in future versions
+
+added 143 packages, and audited 684 packages in 2m
+
+67 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % npx remotion lambda policies user
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "HandleQuotas",
+      "Effect": "Allow",
+      "Action": [
+        "servicequotas:GetServiceQuota",
+        "servicequotas:GetAWSDefaultServiceQuota",
+        "servicequotas:RequestServiceQuotaIncrease",
+        "servicequotas:ListRequestedServiceQuotaChangeHistoryByQuota"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Sid": "PermissionValidation",
+      "Effect": "Allow",
+      "Action": [
+        "iam:SimulatePrincipalPolicy"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Sid": "LambdaInvokation",
+      "Effect": "Allow",
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/remotion-lambda-role"
+      ]
+    },
+    {
+      "Sid": "Storage",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:DeleteObject",
+        "s3:PutObjectAcl",
+        "s3:PutObject",
+        "s3:CreateBucket",
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:PutBucketAcl",
+        "s3:DeleteBucket",
+        "s3:PutBucketOwnershipControls",
+        "s3:PutBucketPublicAccessBlock",
+        "s3:PutLifecycleConfiguration"
+      ],
+      "Resource": [
+        "arn:aws:s3:::remotionlambda-*"
+      ]
+    },
+    {
+      "Sid": "BucketListing",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListAllMyBuckets"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Sid": "FunctionListing",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:ListFunctions",
+        "lambda:GetFunction"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Sid": "FunctionManagement",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:InvokeAsync",
+        "lambda:InvokeFunction",
+        "lambda:CreateFunction",
+        "lambda:DeleteFunction",
+        "lambda:PutFunctionEventInvokeConfig",
+        "lambda:PutRuntimeManagementConfig",
+        "lambda:TagResource"
+      ],
+      "Resource": [
+        "arn:aws:lambda:*:*:function:remotion-render-*"
+      ]
+    },
+    {
+      "Sid": "LogsRetention",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:PutRetentionPolicy"
+      ],
+      "Resource": [
+        "arn:aws:logs:*:*:log-group:/aws/lambda/remotion-render-*"
+      ]
+    },
+    {
+      "Sid": "FetchBinaries",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:GetLayerVersion"
+      ],
+      "Resource": [
+        "arn:aws:lambda:*:678892195805:layer:remotion-binaries-*",
+        "arn:aws:lambda:*:580247275435:layer:LambdaInsightsExtension*"
+      ]
+    }
+  ]
+}
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % 
+
+
+
+
+
+
+
+Third aws command output
+/Users/karthiknadar/.zshrc:.:38: no such file or directory: /Users/karthiknadar/.deno/envexport
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % npx remotion lambda policies validate
+✅ servicequotas:GetServiceQuota
+✅ servicequotas:GetAWSDefaultServiceQuota
+✅ servicequotas:RequestServiceQuotaIncrease
+✅ servicequotas:ListRequestedServiceQuotaChangeHistoryByQuota
+✅ iam:SimulatePrincipalPolicy
+✅ iam:PassRole
+✅ s3:GetObject
+✅ s3:DeleteObject
+✅ s3:PutObjectAcl
+✅ s3:PutObject
+✅ s3:CreateBucket
+✅ s3:ListBucket
+✅ s3:GetBucketLocation
+✅ s3:PutBucketAcl
+✅ s3:DeleteBucket
+✅ s3:PutBucketOwnershipControls
+✅ s3:PutBucketPublicAccessBlock
+✅ s3:PutLifecycleConfiguration
+✅ s3:ListAllMyBuckets
+✅ lambda:ListFunctions
+✅ lambda:GetFunction
+✅ lambda:InvokeAsync
+✅ lambda:InvokeFunction
+✅ lambda:CreateFunction
+✅ lambda:DeleteFunction
+✅ lambda:PutFunctionEventInvokeConfig
+✅ lambda:PutRuntimeManagementConfig
+✅ lambda:TagResource
+✅ logs:CreateLogGroup
+✅ logs:PutRetentionPolicy
+✅ lambda:GetLayerVersion
+✅ lambda:GetLayerVersion
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % 
+
+
+
+
+
+
+fourth command
+/Users/karthiknadar/.zshrc:.:38: no such file or directory: /Users/karthiknadar/.deno/envexport
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % npx remotion lambda functions deploy
+Region = us-east-2
+Memory = 2048MB
+Disk size = 2048MB
+Timeout = 120sec
+Version = 4.0.341
+CloudWatch Logging Enabled = true
+CloudWatch Retention Period = 14 days
+Lambda Insights Enabled = false
+Deployed as remotion-render-4-0-341-mem2048mb-disk2048mb-120sec
+
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % npx remotion lambda sites create app/remotion/index.ts --site-name=shawtyai
+Bundled site         ━━━━━━━━━━━━━━━━━━ 4942ms
+Created bucket       ━━━━━━━━━━━━━━━━━━ 4154ms
+Uploaded to S3       ━━━━━━━━━━━━━━━━━━ 7111ms (+18 files)
+Serve URL            https://remotionlambda-useast2-12kqcubr4b.s3.us-east-2.amazonaws.com/sites/shawtyai/index.html
+Site name            shawtyai
+
+ℹ️   Redeploy your site everytime you make changes to it. You can overwrite the existing site by running:
+npx remotion lambda sites create app/remotion/index.ts --site-name=shawtyai
+(base) karthiknadar@karthiks-MacBook-Pro-2 shawtyai % 
+
+
+
+
+
