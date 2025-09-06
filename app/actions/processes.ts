@@ -2,9 +2,9 @@ import { prisma } from "../lib/db"
 import { findPrompt } from "../lib/findPrompt"
 import { generateImages } from "./image"
 import { generateScript } from "./script"
-// import { generateAudio } from "./audio"
-// import { generateCaptions } from "./captions"
-// import { videoDuration } from "../lib/duration"
+import { generateAudio } from "./audio"
+import { generateCaptions } from "./captions"
+import { videoDuration } from "../lib/duration"
 // import { renderVideo } from "./render"
 
 export const processes = async (videoId: string) => {
@@ -29,9 +29,9 @@ export const processes = async (videoId: string) => {
         })
 
         await generateImages(videoId)
-        // await generateAudio(videoId)
-        // await generateCaptions(videoId)
-        // await videoDuration(videoId)
+        await generateAudio(videoId)
+        await generateCaptions(videoId)
+        await videoDuration(videoId)
 
         // await renderVideo(videoId)
 

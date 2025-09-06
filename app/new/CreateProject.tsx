@@ -68,12 +68,12 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                 }, 5000)
             } else {
                 setIsLoading(false)
-                alert('failed to creating video')
+                alert('Failed to create video')
             }
         } catch (error) {
             setIsLoading(false)
-            console.log('failed to creating video')
-            alert('failed to creating video')
+            console.error('Failed to create video', error)
+            alert('Failed to create video')
 
         }
     }
