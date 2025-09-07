@@ -21,6 +21,17 @@ const s3Client = new S3Client({
 
 const bucketName = process.env.S3_BUCKET_NAME
 
+const fetchWithTimeout = async (url: string, timeoutMs: number): Promise<Response> => {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), timeoutMs)
+    try {
+        const res = await fetch(url, { signal: controller.signal })
+        return res
+    } finally {
+        clearTimeout(timeout)
+    }
+}
+
 const processImage = async (img: string) => {
     try {
         const input = {
@@ -33,7 +44,30 @@ const processImage = async (img: string) => {
         const output = await replicate.run("ideogram-ai/ideogram-v3-turbo", { input }) as ReplicateOutput;
         const image = output.url()
         const imageUrl = image.href
-        const response = await fetch(imageUrl)
+
+        // Retry transient network errors (e.g., timeouts) a few times
+        const maxAttempts = 3
+        const timeoutMs = 15000
+        let lastError: unknown = null
+        let response: Response | null = null
+        for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                response = await fetchWithTimeout(imageUrl, timeoutMs)
+                if (!response.ok) {
+                    throw new Error(`Image fetch failed with status ${response.status}`)
+                }
+                break
+            } catch (err) {
+                lastError = err
+                if (attempt === maxAttempts) {
+                    throw err
+                }
+                await new Promise((r) => setTimeout(r, 500 * attempt))
+            }
+        }
+        if (!response) {
+            throw lastError || new Error('Unknown error fetching image')
+        }
         const arrayBuffer = await response.arrayBuffer()
         const buffer = Buffer.from(arrayBuffer)
 
