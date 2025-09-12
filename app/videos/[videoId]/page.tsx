@@ -79,30 +79,28 @@ const page = async ({ params }: {
             {/* Content Section - Prompt and Transcript */}
             <div className="w-full max-w-4xl space-y-8 mt-20">
                 {/* Prompt Section */}
-                <div className="flex flex-col gap-4">
-                    <div className="flex flex-row gap-2 items-center">
-                        <div
-                            className={cn(
-                                "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-800 dark:hover:bg-neutral-800",
-                            )}
-                        >
-                            <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-                                <span>✨ Prompt</span>
-                                <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
-                            </AnimatedShinyText>
+                <div className="flex flex-col gap-6">
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
+                            <span className="text-lg font-semibold text-white">Original Prompt</span>
                         </div>
-
-                        <Input
-                            className="rounded h-9 flex-1"
-                            style={
-                                {
-                                    background: "#eee",
-                                    color: "#000"
-                                }
-                            }
-                            defaultValue={prompt}
-                            disabled
-                        />
+                    </div>
+                    
+                    <div className="relative group">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                        <div className="relative bg-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-lg p-4">
+                            <div className="flex items-start gap-3">
+                                <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                    <span className="text-white text-sm font-bold">💡</span>
+                                </div>
+                                <div className="flex-1">
+                                    <p className="text-gray-200 leading-relaxed font-medium">
+                                        {prompt}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
