@@ -45,7 +45,7 @@ const page = async ({ params }: {
     }
 
     return (
-        <div className="w-screen min-h-screen flex flex-col items-center p-6 relative">
+        <div className="w-full min-h-screen flex flex-col items-center p-6 relative overflow-x-hidden">
             {/* Back to Dashboard Button - Top Left */}
             <div className="absolute top-6 left-6">
                 <Link href="/dashboard">
@@ -95,7 +95,7 @@ const page = async ({ params }: {
                                     <span className="text-white text-sm font-bold">💡</span>
                                 </div>
                                 <div className="flex-1">
-                                    <p className="text-gray-200 leading-relaxed font-medium">
+                                    <p className="text-gray-200 leading-relaxed text-sm">
                                         {prompt}
                                     </p>
                                 </div>
@@ -105,32 +105,28 @@ const page = async ({ params }: {
                 </div>
 
                 {/* Transcript Section */}
-                <div>
-                    <div className="w-fit mb-5">
-                        <div className="group relative mx-auto flex items-center justify-center rounded-full px-2 py-1.5 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f] ">
-                            <span
-                                className={cn(
-                                    "absolute inset-0 block h-full w-full animate-gradient rounded-[inherit] bg-gradient-to-r from-[#b0b0b0]/50 via-[#9c40ff]/50 to-[#b0b0b0]/50 bg-[length:300%_100%] p-[1px]",
-                                )}
-                                style={{
-                                    WebkitMask:
-                                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                                    WebkitMaskComposite: "destination-out",
-                                    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                                    maskComposite: "subtract",
-                                    WebkitClipPath: "padding-box",
-                                }}
-                            />
-
-                            <AnimatedGradientText className="text-sm font-medium">
-                                Transcript
-                            </AnimatedGradientText>
+                <div className="flex flex-col gap-6">
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 bg-gradient-to-r from-green-500 to-teal-500 rounded-full animate-pulse"></div>
+                            <span className="text-lg font-semibold text-white">Video Transcript</span>
                         </div>
                     </div>
-                    <div className="w-full p-6 rounded-md bg-neutral-900/60 background-blur-sm border-gray-100">
-                        <TypingAnimation className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-gray-100 to-gray-400">
-                            {transcript}
-                        </TypingAnimation>
+                    
+                    <div className="relative group">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-green-600 via-teal-600 to-green-600 rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                        <div className="relative bg-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-lg p-6">
+                            <div className="flex items-start gap-3">
+                                <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center">
+                                    <span className="text-white text-sm font-bold">📝</span>
+                                </div>
+                                <div className="flex-1">
+                                    <TypingAnimation className="text-gray-200 leading-relaxed text-sm">
+                                        {transcript}
+                                    </TypingAnimation>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

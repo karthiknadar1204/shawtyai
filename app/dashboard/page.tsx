@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import { prisma } from "../lib/db"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
+import { Plus, Video } from "lucide-react"
 import { SignOutButton } from "@clerk/nextjs"
 import { VideoCard } from "../components/videoCard"
 
@@ -41,6 +41,11 @@ const Dashboard = async () => {
                         </Button>
                     </SignOutButton>
                 </div>
+            </div>
+
+            {/* Video Count */}
+            <div className="mb-6 text-base text-gray-400">
+                {videos.length} video{videos.length !== 1 ? 's' : ''} generated
             </div>
 
             {
