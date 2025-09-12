@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { SignInButton, SignUpButton } from '@clerk/nextjs'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Cover } from "@/components/ui/cover";
 import { ShineBorder } from '@/components/magicui/shine-border';
 import { PlaceholdersAndVanishInput } from '@/components/ui/placeholders-and-vanish-input';
@@ -11,23 +11,35 @@ import TooltipCredits from '../components/creditsButton'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useRouter } from 'next/navigation'
 import { createVideo } from '../actions/create'
-import { MultiStepLoader as Loader } from '@/components/ui/multi-step-loader'
 
 const CreateProject = ({ user, credits }: { user: string | null; credits: number }) => {
-    const loadingStates = [
-        { text: "Generating Context" },
-        { text: "Generating Image Scripts" },
-        { text: "Generating Image 1" },
-        { text: "Generating Image 2" },
-        { text: "Generating Image 3" },
-        { text: "Generating Image 4" },
-        { text: "Generating Image 5" },
-        { text: "Generating Audio Script" },
-        { text: "Generating Audio" },
-        { text: "Generating Captions" },
-        { text: "Combining it All" },
-        { text: "Almost done" },
-        { text: "Completed, redirecting" }
+    const customMessages = [
+        "Generating your unique script",
+        "Adding some spices",
+        "Mixing it up"
+    ]
+
+    const defaultFacts = [
+        "Did you know? The shortest war in history lasted only 38 minutes!",
+        "Fun fact: Honey never spoils - archaeologists have found edible honey in ancient Egyptian tombs!",
+        "Interesting: A group of flamingos is called a 'flamboyance'!",
+        "Amazing: There are more possible games of chess than atoms in the observable universe!",
+        "Cool fact: The human brain contains approximately 86 billion neurons!",
+        "Did you know? Octopuses have three hearts and blue blood!",
+        "Fun fact: A jiffy is an actual unit of time - it's 1/100th of a second!",
+        "Interesting: Bananas are berries, but strawberries aren't!",
+        "Amazing: The Great Wall of China isn't visible from space with the naked eye!",
+        "Cool fact: There are more trees on Earth than stars in the Milky Way!",
+        "Mind-blowing: Wombat poop is cube-shaped! Nature's little dice!",
+        "Fascinating: Dolphins have names for each other and can recognize themselves in mirrors!",
+        "Incredible: A single cloud can weigh more than a million pounds!",
+        "Wild fact: There's a species of jellyfish that can live forever by reverting to its juvenile form!",
+        "Surprising: The human nose can detect over 1 trillion different smells!",
+        "Cool discovery: There are more possible arrangements of a deck of cards than seconds since the Big Bang!",
+        "Amazing: A group of owls is called a 'parliament' - how fitting!",
+        "Fun science: The speed of light is so fast that it could go around Earth 7.5 times in one second!",
+        "Mind-bending: Time moves slower on the top of Mount Everest than at sea level!",
+        "Incredible: Your body produces 25 million new cells every second!"
     ]
     const router = useRouter()
     const placeholders = [
@@ -41,9 +53,40 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
     const [showLoginDialog, setShowLoginDialog] = useState(false)
     const [showCreditsDialog, setShowCreditsDialog] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [currentLoadingStep, setCurrentLoadingStep] = useState(0)
+    const [randomFacts, setRandomFacts] = useState<string[]>([])
+
+    // Create infinite queue with custom messages and random facts
+    useEffect(() => {
+        if (!isLoading) {
+            setCurrentLoadingStep(0);
+            setRandomFacts([]);
+            return;
+        }
+        
+        const timeout = setTimeout(() => {
+            setCurrentLoadingStep((prevState) => {
+                const totalItems = customMessages.length + defaultFacts.length;
+                return (prevState + 1) % totalItems; // Infinite loop
+            });
+        }, 3000); // 3 seconds per item for better reading
+
+        return () => clearTimeout(timeout);
+    }, [currentLoadingStep, isLoading, customMessages.length, defaultFacts.length]);
+
+    // Get current message from infinite queue
+    const getCurrentMessage = () => {
+        if (currentLoadingStep < customMessages.length) {
+            return customMessages[currentLoadingStep];
+        } else {
+            const factIndex = currentLoadingStep - customMessages.length;
+            return defaultFacts[factIndex];
+        }
+    };
 
     const handleCreateVideo = async () => {
         setIsLoading(true)
+        setCurrentLoadingStep(0)
 
         try {
             const result = await createVideo(prompt)
@@ -60,6 +103,7 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                         } else if (data.failed) {
                             clearInterval(pollInterval)
                             setIsLoading(false)
+                            setCurrentLoadingStep(0)
                             alert('video generating failed')
                         }
                     } catch (error) {
@@ -68,13 +112,14 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                 }, 5000)
             } else {
                 setIsLoading(false)
+                setCurrentLoadingStep(0)
                 alert('Failed to create video')
             }
         } catch (error) {
             setIsLoading(false)
+            setCurrentLoadingStep(0)
             console.error('Failed to create video', error)
             alert('Failed to create video')
-
         }
     }
     return (
@@ -105,14 +150,29 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                 </div>
             }
 
-            <Loader
-                key={isLoading ? 'loading' : 'idle'}
-                loadingStates={loadingStates}
-                loading={isLoading}
-                duration={10000}
-                loop={false}
-
-            />
+            <Dialog open={isLoading} onOpenChange={() => {}}>
+                <DialogContent className="sm:max-w-[500px]">
+                    <DialogHeader>
+                        <DialogTitle>Creating Your Video</DialogTitle>
+                        <DialogDescription>
+                            Please wait while we generate your amazing video...
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-6">
+                        <div className="flex items-center justify-center mb-4">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3352CC]"></div>
+                        </div>
+                        <div className="text-center">
+                            <p className="text-lg font-medium">
+                                {getCurrentMessage()}
+                            </p>
+                            <p className="text-sm text-gray-500 mt-2">
+                                {currentLoadingStep < customMessages.length ? "Processing..." : "Fun fact while you wait!"}
+                            </p>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
 
             <h1 className="text-4xl md:text-4xl lg:text-6xl font-semibold max-w-7xl mx-auto text-center mt-6 relative z-20 py-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white">
                 Generate realistic short

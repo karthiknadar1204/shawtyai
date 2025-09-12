@@ -1,12 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Copy, Download, Trash2 } from "lucide-react"
+import { Copy, Download, Trash2 } from "lucide-react"
 import { useVideoActions } from "../hooks/useVideoActions"
 import { useRouter } from "next/navigation"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { AlertDialogDescription, AlertDialogTitle } from "@radix-ui/react-alert-dialog"
-import Link from "next/link"
 
 interface videoActionsPromp {
     videoId: string
@@ -23,20 +22,20 @@ export const VideoActions = ({ videoId, videoUrl, isOwner }: videoActionsPromp) 
     })
 
     return (
-        <div className="flex flex-col gap-3 mt-10 ml-8 justify-center">
+        <div className="flex flex-row gap-4 items-center justify-center flex-wrap">
             <Button
                 onClick={handleDownload}
-                className='bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium flex items-center gap-2 justify-start w-48 cursor-pointer'
+                className='bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium flex items-center gap-2 cursor-pointer'
                 disabled={!videoUrl}
             >
-                <Download className="h-4 w-4 " />
+                <Download className="h-4 w-4" />
                 Download
             </Button>
 
             <Button
                 variant="outline"
                 onClick={handleCopyLink}
-                className="flex items-center gap-2 rounded-full justify-start w-48 cursor-pointer"
+                className="flex items-center gap-2 rounded-lg cursor-pointer"
             >
                 <Copy className="h-4 w-4" />
                 {copied ? 'Copied!' : 'Copy Link'}
@@ -48,7 +47,7 @@ export const VideoActions = ({ videoId, videoUrl, isOwner }: videoActionsPromp) 
                         <AlertDialogTrigger asChild>
                             <Button
                                 variant="outline"
-                                className="flex items-center gap-2 text-red-600 hover:bg-red-50 border-red-200 rounded-full dark:hover:bg-red-950 dark:border-red-800 justify-start w-48 cursor-pointer"
+                                className="flex items-center gap-2 text-red-600 hover:bg-red-50 border-red-200 rounded-lg dark:hover:bg-red-950 dark:border-red-800 cursor-pointer"
                             >
                                 <Trash2 className="h-4 w-4" />
                                 Delete
@@ -63,11 +62,11 @@ export const VideoActions = ({ videoId, videoUrl, isOwner }: videoActionsPromp) 
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                                <AlertDialogCancel className="rounded-full cursor-pointer">Cancel</AlertDialogCancel>
+                                <AlertDialogCancel className="rounded-lg cursor-pointer">Cancel</AlertDialogCancel>
                                 <AlertDialogAction
                                     onClick={handleDelete}
                                     disabled={isDeleting}
-                                    className="bg-gradient-to-br from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white rounded-full cursor-pointer"
+                                    className="bg-gradient-to-br from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white rounded-lg cursor-pointer"
                                 >
                                     Delete
                                 </AlertDialogAction>
@@ -76,13 +75,6 @@ export const VideoActions = ({ videoId, videoUrl, isOwner }: videoActionsPromp) 
                     </AlertDialog>
                 )
             }
-
-            <Link href="/dashboard">
-                <Button variant="ghost" className="flex item-center gap-2 hover:bg-gray-800 rounded-full justify-start w-48 cursor-pointer">
-                    <ArrowLeft className="h-4 w-4" />
-                    Back to Dashboard
-                </Button>
-            </Link>
 
         </div>
     )
