@@ -51,19 +51,19 @@ const PricingPage = () => {
                 </p>
                 <div className="grid grid-cols-3 gap-8">
                     {plans.map((plan) => (
-                        <div key={plan.name} className={`bg-white rounded-lg p-6 relative ${plan.popular ? 'ring-2 ring-blue-500' : ''}`}>
+                        <div key={plan.name} className={`bg-black border border-gray-700 rounded-lg p-6 relative ${plan.popular ? 'ring-2 ring-blue-500' : ''}`}>
                             {plan.popular && (
-                                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-br text-white from-[#3352CC] to-[#1C2D70] px-4 py-1 rounded-full text-sm font-medium">
+                                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-br text-white from-[#3352CC] to-[#1C2D70] px-4 py-1 rounded-lg text-sm font-medium">
                                     Most Popular
                                 </div>
                             )}
-                            <h3 className="text-2xl font-bold text-gray-900">
+                            <h3 className="text-2xl font-bold text-white">
                                 {plan.name}
                             </h3>
 
                             <div className="my-4">
-                                <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                                <span className="text-gray-500">/one-time</span>
+                                <span className="text-4xl font-bold text-white">{plan.price}</span>
+                                <span className="text-gray-400">/one-time</span>
                             </div>
 
                             <ul className="space-y-3 mb-8">
@@ -72,7 +72,7 @@ const PricingPage = () => {
                                         <span className="text-blue-500 mr-3">
                                             ✔
                                         </span>
-                                        <span className="text-gray-700">
+                                        <span className="text-gray-300">
                                             {feature}
                                         </span>
                                     </li>
@@ -80,7 +80,7 @@ const PricingPage = () => {
                             </ul>
                             <Button
                                 onClick={() => handleSubscription(plan.priceId)}
-                                className={`w-full ${plan.popular ? 'bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium cursor-pointer' : 'bg-gray-800 hover:bg-gray-900 text-white cursor-pointer'}`}
+                                className={`w-full ${plan.popular ? 'bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium cursor-pointer' : 'bg-gray-800 hover:bg-gray-900 text-white rounded-lg cursor-pointer'}`}
                             >
                                 {plan.popular ? 'Sign up' : 'GetStarted'}
                             </Button>
