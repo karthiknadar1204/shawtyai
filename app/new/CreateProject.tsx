@@ -83,12 +83,12 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                 !user &&
                 <div className='flex justify-end gap-1 mr-7 mt-5'>
                     <SignInButton>
-                        <Button className='bg-black border border-gray-400 text-white  rounded-full mx-2 hover:bg-gray-900 transitioncolors duration-150  cursor-pointer'>
+                        <Button className='bg-black border border-gray-400 text-white rounded-lg mx-2 hover:bg-gray-900 transitioncolors duration-150 cursor-pointer'>
                             Sign In
                         </Button>
                     </SignInButton>
                     <SignUpButton>
-                        <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium cursor-pointer'>
+                        <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium cursor-pointer'>
                             Sign up
                         </Button>
                     </SignUpButton>
@@ -98,7 +98,7 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                 <div className='flex justify-end mr-7 mt-5'>
                     <TooltipCredits credits={credits} />
                     <Link href={"/dashboard"}>
-                        <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium mx-2 cursor-pointer'>
+                        <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium mx-2 cursor-pointer'>
                             Dashboard
                         </Button>
                     </Link>
@@ -151,12 +151,12 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                         </DialogHeader>
                         <DialogFooter>
                             <SignInButton>
-                                <Button className='bg-black border border-gray-400 text-white  rounded-full mx-2 hover:bg-gray-900 transitioncolors duration-150  cursor-pointer'>
+                                <Button className='bg-black border border-gray-400 text-white rounded-lg mx-2 hover:bg-gray-900 transitioncolors duration-150 cursor-pointer'>
                                     Sign In
                                 </Button>
                             </SignInButton>
                             <SignUpButton>
-                                <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium cursor-pointer'>
+                                <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium cursor-pointer'>
                                     Sign up
                                 </Button>
                             </SignUpButton>
@@ -176,7 +176,7 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                         </DialogHeader>
                         <DialogFooter>
                             <Button
-                                className='bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium cursor-pointer'
+                                className='bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium cursor-pointer'
 
                                 onClick={() => {
                                     router.push('/pricing')
@@ -187,7 +187,7 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                             </Button>
                             <Button
                                 variant="outline"
-                                className='rounded-full cursor-pointer'
+                                className='rounded-lg cursor-pointer'
                                 onClick={() => setShowCreditsDialog(false)}
                             >
                                 Close

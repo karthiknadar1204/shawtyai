@@ -29,14 +29,14 @@ const Dashboard = async () => {
 
                 <div className="flex items-center gap-2">
                     <Link href="/new">
-                        <Button className="bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium mx-2 cursor-pointer">
+                        <Button className="bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium mx-2 cursor-pointer">
                             <Plus className="h-2 w-2" />
                             Create new
                         </Button>
                     </Link>
 
                     <SignOutButton>
-                        <Button className='bg-black border border-gray-400 text-white  rounded-full mx-2 hover:bg-gray-900 transitioncolors duration-150  cursor-pointer'>
+                        <Button className='bg-black border border-gray-400 text-white rounded-lg mx-2 hover:bg-gray-900 transitioncolors duration-150 cursor-pointer'>
                             Sign Out
                         </Button>
                     </SignOutButton>
@@ -48,7 +48,7 @@ const Dashboard = async () => {
                     <div className="text-center py-16 bg-gray-800 rounded-lg">
                         <p className="text-xl mb-4">You havent created any videos yet</p>
                         <Link href='/new'>
-                            <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-full from-[#3352CC] to-[#1C2D70] font-medium mx-2 cursor-pointer'>
+                            <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium mx-2 cursor-pointer'>
                                 Create your first video
                             </Button>
                         </Link>
