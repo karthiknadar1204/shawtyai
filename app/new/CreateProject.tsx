@@ -11,6 +11,8 @@ import TooltipCredits from '../components/creditsButton'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useRouter } from 'next/navigation'
 import { createVideo } from '../actions/create'
+import { BackgroundRippleEffect } from '@/components/ui/background-ripple-effect'
+import { TextHoverEffect } from '@/components/ui/text-hover-effect'
 
 const CreateProject = ({ user, credits }: { user: string | null; credits: number }) => {
     const customMessages = [
@@ -18,6 +20,34 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
         "Adding some spices",
         "Mixing it up"
     ]
+
+    const genZWords = [
+        "viral shorts",
+        "bussin' content",
+        "slay videos", 
+        "no cap clips",
+        "fire content",
+        "it's giving vibes",
+        "periodt videos",
+        "bestie content",
+        "chef's kiss moments",
+        "that's so fetch",
+        "iconic moments",
+        "slay queen energy",
+        "main character energy",
+        "bestie behavior"
+    ]
+
+
+    const [currentWordIndex, setCurrentWordIndex] = useState(0)
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentWordIndex((prev) => (prev + 1) % genZWords.length)
+        }, 3000) // Change word every 3 seconds
+
+        return () => clearInterval(interval)
+    }, [])
 
     const defaultFacts = [
         "Did you know? The shortest war in history lasted only 38 minutes!",
@@ -123,10 +153,11 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
         }
     }
     return (
-        <div className='w-screen h-screen flex flex-col'>
+        <div className='w-screen h-screen flex flex-col relative overflow-hidden'>
+            <BackgroundRippleEffect rows={12} cols={30} cellSize={60} />
             {
                 !user &&
-                <div className='flex justify-end gap-1 mr-7 mt-5'>
+                <div className='flex justify-end gap-1 mr-7 mt-5 relative z-10'>
                     <SignInButton>
                         <Button className='bg-black border border-gray-400 text-white rounded-lg mx-2 hover:bg-gray-900 transitioncolors duration-150 cursor-pointer'>
                             Sign In
@@ -140,7 +171,7 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                 </div>
             }
             {user &&
-                <div className='flex justify-end mr-7 mt-5'>
+                <div className='flex justify-end mr-7 mt-5 relative z-10'>
                     <TooltipCredits credits={credits} />
                     <Link href={"/dashboard"}>
                         <Button className='bg-gradient-to-br hover:opacity-80 text-white rounded-lg from-[#3352CC] to-[#1C2D70] font-medium mx-2 cursor-pointer'>
@@ -174,13 +205,17 @@ const CreateProject = ({ user, credits }: { user: string | null; credits: number
                 </DialogContent>
             </Dialog>
 
-            <h1 className="text-4xl md:text-4xl lg:text-6xl font-semibold max-w-7xl mx-auto text-center mt-6 relative z-20 py-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white">
+            <h1 className="text-4xl md:text-4xl lg:text-6xl font-semibold max-w-7xl mx-auto text-center mt-6 relative z-10 py-6 bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white">
                 Turn your thoughts into
                 <div className='h-6'></div>
-                <Cover>viral shorts</Cover>
+                <div className="w-full h-32 flex items-center justify-center px-8">
+                    <div className="w-full max-w-4xl">
+                        <TextHoverEffect text={genZWords[currentWordIndex]} />
+                    </div>
+                </div>
             </h1>
 
-            <div className='flex justify-center mt-auto mb-[400px]'>
+            <div className='flex justify-center mt-auto mb-[400px] relative z-10'>
                 <div className='relative rounded-3xl w-[500px] overflow-hidden'>
                     <ShineBorder
                         className='z-10'

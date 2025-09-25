@@ -3,17 +3,46 @@ import { prisma } from "../lib/db"
 import { ElevenLabsClient } from "elevenlabs";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3"
 
-const client = new ElevenLabsClient({ apiKey: process.env.ELEVENLABS_API_KEY });
-
-const s3Client = new S3Client({
-    region: process.env.AWS_REGION || '',
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+// Validate required environment variables
+const validateEnvironment = () => {
+    const requiredEnvVars = [
+        'ELEVENLABS_API_KEY',
+        'AWS_REGION',
+        'AWS_ACCESS_KEY_ID',
+        'AWS_SECRET_ACCESS_KEY',
+        'S3_BUCKET_NAME'
+    ];
+    
+    const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+    
+    if (missingVars.length > 0) {
+        throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
     }
-})
+};
 
-const bucketName = process.env.S3_BUCKET_NAME
+// Initialize clients with validation
+let client: ElevenLabsClient;
+let s3Client: S3Client;
+let bucketName: string;
+
+try {
+    validateEnvironment();
+    
+    client = new ElevenLabsClient({ apiKey: process.env.ELEVENLABS_API_KEY! });
+    
+    s3Client = new S3Client({
+        region: process.env.AWS_REGION!,
+        credentials: {
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+        }
+    });
+    
+    bucketName = process.env.S3_BUCKET_NAME!;
+} catch (error) {
+    console.error('Failed to initialize audio service:', error);
+    throw error;
+}
 
 
 export const generateAudio = async (videoId: string) => {
@@ -22,10 +51,16 @@ export const generateAudio = async (videoId: string) => {
             where: { videoId: videoId }
         })
         if (!video || !video.content) {
+            console.log('Video not found or no content available for audio generation');
             return undefined
         }
 
-        console.log('in audio now hahah hehehe')
+        console.log('Starting audio generation for video:', videoId);
+
+        // Validate content length
+        if (video.content.length === 0) {
+            throw new Error('Video content is empty, cannot generate audio');
+        }
 
         const audioStream = await client.textToSpeech.convertAsStream("JBFqnCBsd6RMkjVDRZzb",
             {
@@ -38,6 +73,10 @@ export const generateAudio = async (videoId: string) => {
         const chunks: Buffer[] = []
         for await (const chunk of audioStream) {
             chunks.push(chunk)
+        }
+
+        if (chunks.length === 0) {
+            throw new Error('No audio data received from ElevenLabs');
         }
 
         const audioBuffer = Buffer.concat(chunks)
@@ -53,9 +92,7 @@ export const generateAudio = async (videoId: string) => {
         await s3Client.send(command)
 
         const s3Url = `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`
-        console.log("audio file of yout video",s3Url)
-
-        // const s3Url = 'https://shorts699.s3.eu-north-1.amazonaws.com/3b06934a-8472-4809-bb5e-0605416ca622.mp3'
+        console.log("Audio file uploaded successfully:", s3Url)
 
         await prisma.video.update({
             where: {
@@ -66,9 +103,25 @@ export const generateAudio = async (videoId: string) => {
             }
         })
 
+        console.log('Audio generation completed successfully for video:', videoId);
+
     }
     catch (error) {
-        console.error('error while generating audio', error)
+        console.error('Error while generating audio for video', videoId, ':', error)
+        
+        // Update video status to failed
+        try {
+            await prisma.video.update({
+                where: { videoId: videoId },
+                data: { 
+                    processing: false,
+                    failed: true 
+                }
+            });
+        } catch (dbError) {
+            console.error('Failed to update video status after audio error:', dbError);
+        }
+        
         throw error
     }
 }
