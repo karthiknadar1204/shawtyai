@@ -101,7 +101,7 @@ export const generateImages = async (videoId: string) => {
             return null
         }
 
-        const imagePromises = video.imagePrompts.map(img => processImage(img))
+        const imagePromises = video.imagePrompts.map((img: string) => processImage(img))
 
         const imageLinks = await Promise.all(imagePromises)
 
