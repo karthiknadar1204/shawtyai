@@ -6,7 +6,7 @@ import { Plus, Video } from "lucide-react"
 import { SignOutButton } from "@clerk/nextjs"
 import { VideoCard } from "../components/videoCard"
 import { BackgroundBeams } from "@/components/ui/background-beams"
-import { Video as VideoType } from "@prisma/client"
+import type { Video as VideoType } from "@prisma/client"
 
 const Dashboard = async () => {
     const user = await currentUser()
