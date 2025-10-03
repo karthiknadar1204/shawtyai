@@ -6,7 +6,8 @@ import { Plus, Video } from "lucide-react"
 import { SignOutButton } from "@clerk/nextjs"
 import { VideoCard } from "../components/videoCard"
 import { BackgroundBeams } from "@/components/ui/background-beams"
-import type { Video as VideoType } from "@prisma/client"
+// Using Prisma's return type instead of importing Video type
+type VideoType = Awaited<ReturnType<typeof prisma.video.findMany>>[0]
 
 const Dashboard = async () => {
     const user = await currentUser()
