@@ -2,15 +2,16 @@ import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2025-08-27.basil'
-})
-
 export async function POST(req: Request) {
     const user = await currentUser()
     if (!user) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2025-08-27.basil'
+    })
+
     const { priceId } = await req.json()
 
     const session = await stripe.checkout.sessions.create({
