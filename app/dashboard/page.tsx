@@ -6,6 +6,7 @@ import { Plus, Video } from "lucide-react"
 import { SignOutButton } from "@clerk/nextjs"
 import { VideoCard } from "../components/videoCard"
 import { BackgroundBeams } from "@/components/ui/background-beams"
+import { Video as VideoType } from "@prisma/client"
 
 const Dashboard = async () => {
     const user = await currentUser()
@@ -63,7 +64,7 @@ const Dashboard = async () => {
                         </div>
                     ) : (
                         <div className="grid grid-cols-3 gap-6">
-                            {videos.map((video) => (
+                            {videos.map((video: VideoType) => (
                                 <VideoCard key={video.videoId} video={video} />
                             ))}
                         </div>
